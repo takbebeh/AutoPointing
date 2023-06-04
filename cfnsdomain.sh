@@ -41,6 +41,4 @@ RESULT=$(
 	--data '{"type":"NS","name":"'${NS_DOMAIN}'","content":"'${DAOMIN}'","proxied":false}'
 )
 echo $NS_DOMAIN >/etc/xray/dns
-echo "NS_Domain kamu adalah : $SUB_DOMAIN"
-sleep 3
 rm -f /root/cfnsdomain.sh
