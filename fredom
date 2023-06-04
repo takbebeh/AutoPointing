@@ -7,7 +7,7 @@ read -rp "   ⚡ Masukkan IP VPS  : " ipinput
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "         Data telah diterima dan akan segera diprogres"
 DOMAIN=alfvpn.my.id
-sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)
+sub=$(</dev/urandom tr -dc a-z0-9 | head -c3)
 SUB_DOMAIN=${sub}.alfvpn.my.id
 CF_ID=alfinproject22@gmail.com
 CF_KEY=a9d92b093d290b0a16ed6d5610f4c6baa667d
@@ -44,7 +44,8 @@ rm fredom
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "            ⚡ DOMAIN TELAH BERHASIL DIPOINTING ⚡"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
-echo "     ⚡ Domain kamu : [ $SUB_DOMAIN ]"
+echo "     ⚡ Domain Pointing : [ $SUB_DOMAIN ]"
+echo "     ⚡ IP VPS Pointing : [ $SUB_DOMAIN ]"
 echo " "
 echo "   Jangan lupa dicatat dan gunakan saat instalasi VPS anda"
 echo "      TERIMA KASIH TELAH MENGGUNAKAN SCRIPT PREMIUM INI"
