@@ -1,7 +1,7 @@
 #!/bin/bash
-DOMAIN=alfvpndev.my.id
+DOMAIN=vpnsakti.cfd
 sub=$(tr </dev/urandom -dc a-z0-9 | head -c3)
-SUB_DOMAIN=${sub}.alfvpndev.my.id
+SUB_DOMAIN=${sub}.vpnsakti.cfd
 CF_ID=alfinproject22@gmail.com
 CF_KEY=a9d92b093d290b0a16ed6d5610f4c6baa667d
 set -euo pipefail
