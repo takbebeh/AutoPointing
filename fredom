@@ -45,7 +45,7 @@ echo "━━━━━━━━━━━━━━━━━━━━━━━━�
 echo "            ⚡ DOMAIN TELAH BERHASIL DIPOINTING ⚡"
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "     ⚡ Domain Pointing : [ $SUB_DOMAIN ]"
-echo "     ⚡ IP VPS Pointing : [ $SUB_DOMAIN ]"
+echo "     ⚡ IP VPS Pointing : [ $ipinput ]"
 echo " "
 echo "   Jangan lupa dicatat dan gunakan saat instalasi VPS anda"
 echo "      TERIMA KASIH TELAH MENGGUNAKAN SCRIPT PREMIUM INI"
