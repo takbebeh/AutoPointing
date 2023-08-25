@@ -105,12 +105,12 @@ function renew_domain() {
 
 cloudflare() {
 
-    DOMEN="alfvpn.my.id"
+    DOMEN="alfvpn.cloud"
     sub=$(tr </dev/urandom -dc a-z0-9 | head -c5)
-    domain="${sub}.alfvpn.my.id"
+    domain="${sub}.alfvpn.cloud"
     echo -e "${domain}" >/etc/xray/domain
-    CF_ID="alfinproject22@gmail.com"
-    CF_KEY="a9d92b093d290b0a16ed6d5610f4c6baa667d"
+    CF_ID="alfvpncommunity@gmail.com"
+    CF_KEY="62a9286f621faa79e7fd192f9b71e4a047e93"
     set -euo pipefail
     IP=$(wget -qO- ipinfo.io/ip)
     echo -e "Updating DNS for ${gray}${domain}${Font}"
