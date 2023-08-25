@@ -1,6 +1,6 @@
 #!/bin/bash
 DOMAIN=alfvpn.cloud
-sub=$(tr </dev/urandom -dc a-z0-9 | head -c3)
+sub=$(tr </dev/urandom -dc a-z0-9 | head -c4)
 SUB_DOMAIN=${sub}.alfvpn.cloud
 CF_ID=alfvpncommunity@gmail.com
 CF_KEY=62a9286f621faa79e7fd192f9b71e4a047e93
