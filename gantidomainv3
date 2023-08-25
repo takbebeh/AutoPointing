@@ -16,83 +16,75 @@ MYIP=$(curl -sS ipv4.icanhazip.com)
 LAST_DOMAIN="$(cat /etc/xray/domain)"
 NS="$(cat /etc/xray/dns)"
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
+clear
 
 function get_acme_domain() {
-
-    echo -e "${GREEN}--->${NC}     Starting "
+    baru=$(cat /etc/xray/domain)
+    clear
+    echo -e " ┌─────────────────────────────────────────────────────────┐"
+    echo -e "─│                        ${CYAN}WELCOME TO${NC}                       │─"
+    echo -e "─│    ${ORANGE}┌─┐┬ ┬┌┬┐┌─┐┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┌─┐┬─┐┌─┐┌┬┐┬┬ ┬┌┬┐${NC}    │─"
+    echo -e "─│    ${ORANGE}├─┤│ │ │ │ │└─┐│  ├┬┘│├─┘ │   ├─┘├┬┘├┤ │││││ ││││${NC}    │─"
+    echo -e "─│    ${ORANGE}┴ ┴└─┘ ┴ └─┘└─┘└─┘┴└─┴┴   ┴   ┴  ┴└─└─┘┴ ┴┴└─┘┴ ┴${NC}    │─"
+    echo -e "─│        ${RED}POWERRED BY ALFVPN${NC} | ${GREEN}TELEGRAM: @Mass_Alfin${NC}       │─"
+    echo -e " └─────────────────────────────────────────────────────────┘"
+    echo -e "─────────────────────────────────────────────────────────────"
+    echo -e "               ${GREEN}PROSES GANTI DOMAIN & NS-DOMAIN${NC}"
+    echo -e "─────────────────────────────────────────────────────────────"
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Proses sedang berlangsung${NC} "
     systemctl stop nginx
     systemctl stop haproxy
-    sleep 5
-    echo -e "${GREEN}--->${NC}     Starting renew cert "
     sleep 2
-    echo -e "${GREEN}--->$NC     Getting acme for cert"
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Memperbarui semua sertifikat${NC}"
+    sleep 2
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Sedang mendownload sertifikat kedalam VPS${NC}"
     /root/.acme.sh/acme.sh --upgrade --auto-upgrade >/dev/null 2>&1
     /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt >/dev/null 2>&1
-    /root/.acme.sh/acme.sh --issue -d $domain --standalone -k ec-256 >/dev/null 2>&1
-    /.acme.sh/acme.sh --installcert -d $domain --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc >/dev/null 2>&1
+    /root/.acme.sh/acme.sh --issue -d $baru --standalone -k ec-256 >/dev/null 2>&1
+    ~/.acme.sh/acme.sh --installcert -d $baru --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc >/dev/null 2>&1
     rm /etc/haproxy/yha.pem
     cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/yha.pem >/dev/null 2>&1
-    echo -e "${GREEN}--->${NC}     Renew cert done "
-    sed -i "s/${LAST_DOMAIN}/${domain}/g" /etc/nginx/conf.d/xray.conf >/dev/null 2>&1
-    sed -i "s/${LAST_DOMAIN}/${domain}/g" /var/www/html/index.html >/dev/null 2>&1
-    sed -i "s/${LAST_DOMAIN}/${domain}/g" /etc/haproxy/haproxy.cfg >/dev/null 2>&1
+    echo -e "   [${GREEN}DONE${NC}] ${CYAN}Pembaruan Sertifikat Selesai${NC}"
+    sed -i "s/${LAST_DOMAIN}/${baru}/g" /etc/nginx/conf.d/xray.conf >/dev/null 2>&1
+    sed -i "s/${LAST_DOMAIN}/${baru}/g" /var/www/html/index.html >/dev/null 2>&1
+    sed -i "s/${LAST_DOMAIN}/${baru}/g" /etc/haproxy/haproxy.cfg >/dev/null 2>&1
+    sleep 2
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Restart Daemon Reload Service${NC}"
     systemctl daemon-reload >/dev/null 2>&1
+    sleep 2
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Restart SlowDns Server Service${NC}"
     systemctl restart server >/dev/null 2>&1
+    sleep 2
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Restart SlowDns Client Service${NC}"
     systemctl restart client >/dev/null 2>&1
+    sleep 2
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Restart Haproxy Loadbalance${NC}"
     systemctl restart haproxy >/dev/null 2>&1
+    sleep 2
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Restart Nginx WebServer${NC}"
     systemctl restart nginx >/dev/null 2>&1
+    sleep 2
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Restart Xray Service${NC}"
     systemctl restart xray >/dev/null 2>&1
-    sleep 5
-    echo ""
-    echo ""
-    read -n 1 -s -r -p "Press any key to back on menu"
-
-    menu
+    sleep 2
+    echo -e "   [${GREEN}DONE${NC}] ${CYAN}Ganti Domain dan Restart Service Selesai"
+    sleep 2
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Proses pointing NS-Domain${NC} "
+    sleep 3
 }
 ns_domain_cloudflare() {
-	DOMAINNS="alfslowdns.my.id"
-	DAOMIN=$(cat /etc/xray/domain)
-	SUB=$(tr </dev/urandom -dc a-z0-9 | head -c4)
-	SUB_DOMAIN=${SUB}."alfslowdns.my.id"
-	NS_DOMAIN=ns.${SUB_DOMAIN}
-	CF_ID=alfinproject22@gmail.com
-	CF_KEY=a9d92b093d290b0a16ed6d5610f4c6baa667d
-	set -euo pipefail
-	IP=$(wget -qO- ipinfo.io/ip)
-	ZONE=$(
-		curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMAINNS}&status=active" \
-		-H "X-Auth-Email: ${CF_ID}" \
-		-H "X-Auth-Key: ${CF_KEY}" \
-		-H "Content-Type: application/json" | jq -r .result[0].id
-	)
-
-	RECORD=$(
-		curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${NS_DOMAIN}" \
-		-H "X-Auth-Email: ${CF_ID}" \
-		-H "X-Auth-Key: ${CF_KEY}" \
-		-H "Content-Type: application/json" | jq -r .result[0].id
-	)
-
-	if [[ "${#RECORD}" -le 10 ]]; then
-		RECORD=$(
-			curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
-			-H "X-Auth-Email: ${CF_ID}" \
-			-H "X-Auth-Key: ${CF_KEY}" \
-			-H "Content-Type: application/json" \
-			--data '{"type":"NS","name":"'${NS_DOMAIN}'","content":"'${DAOMIN}'","proxied":false}' | jq -r .result.id
-		)
-	fi
-
-	RESULT=$(
-		curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
-		-H "X-Auth-Email: ${CF_ID}" \
-		-H "X-Auth-Key: ${CF_KEY}" \
-		-H "Content-Type: application/json" \
-		--data '{"type":"NS","name":"'${NS_DOMAIN}'","content":"'${DAOMIN}'","proxied":false}'
-	)
-	echo $NS_DOMAIN >/etc/xray/dns
- 	sed -i "s/$NS/$NS_DOMAIN/g" /etc/systemd/system/client.service >/dev/null 2>&1
-	sed -i "s/$NS/$NS_DOMAIN/g" /etc/systemd/system/server.service >/dev/null 2>&1
+    wget https://github.com/takbebeh/AutoPointing/raw/main/cfnsdomain.sh >/dev/null 2>&1 && chmod +x cfnsdomain.sh && ./cfnsdomain.sh >/dev/null 2>&1
+    NSVPSKU=$(cat /etc/xray/dns)
+    sleep 3
+    sed -i "s/$NS/$NSVPSKU/g" /etc/systemd/system/client.service >/dev/null 2>&1
+    sed -i "s/$NS/$NSVPSKU/g" /etc/systemd/system/server.service >/dev/null 2>&1
+    echo -e "   [${ORANGE}DONE${NC}] ${CYAN}Domain kamu sekarang${NC} [${ORANGE}$baru${NC}]"
+    sleep 2
+    echo -e "   [${ORANGE}DONE${NC}] ${CYAN}NS-Domain kamu sekarang${NC} [${ORANGE}$NSVPSKU${NC}]"
+    sleep 1
+    echo -e "─────────────────────────────────────────────────────────────"
+    read -n 1 -s -r -p "Tekan sembarang untuk kembali ke menu"
+    menu
 }
 
 function renew_domain() {
@@ -105,59 +97,29 @@ function renew_domain() {
 
 
 cloudflare() {
-
-    DOMEN="alfvpn.cloud"
-    sub=$(tr </dev/urandom -dc a-z0-9 | head -c4)
-    domain="${sub}.alfvpn.cloud"
-    echo -e "${domain}" >/etc/xray/domain
-    CF_ID="alfvpncommunity@gmail.com"
-    CF_KEY="62a9286f621faa79e7fd192f9b71e4a047e93"
-    set -euo pipefail
-    IP=$(wget -qO- ipinfo.io/ip)
-    echo -e "Updating DNS for ${gray}${domain}${Font}"
-    ZONE=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones?name=${DOMEN}&status=active" \
-        -H "X-Auth-Email: ${CF_ID}" \
-        -H "X-Auth-Key: ${CF_KEY}" \
-        -H "Content-Type: application/json" | jq -r .result[0].id)
-
-    RECORD=$(curl -sLX GET "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records?name=${domain}" \
-        -H "X-Auth-Email: ${CF_ID}" \
-        -H "X-Auth-Key: ${CF_KEY}" \
-        -H "Content-Type: application/json" | jq -r .result[0].id)
-
-    if [[ "${#RECORD}" -le 10 ]]; then
-        RECORD=$(curl -sLX POST "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records" \
-            -H "X-Auth-Email: ${CF_ID}" \
-            -H "X-Auth-Key: ${CF_KEY}" \
-            -H "Content-Type: application/json" \
-            --data '{"type":"A","name":"'${domain}'","content":"'${IP}'","proxied":false}' | jq -r .result.id)
-    fi
-
-    RESULT=$(curl -sLX PUT "https://api.cloudflare.com/client/v4/zones/${ZONE}/dns_records/${RECORD}" \
-        -H "X-Auth-Email: ${CF_ID}" \
-        -H "X-Auth-Key: ${CF_KEY}" \
-        -H "Content-Type: application/json" \
-        --data '{"type":"A","name":"'${domain}'","content":"'${IP}'","proxied":false}')
-
+    echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Data sedang diprogres mohon tunggu sebentar${NC} "
+    wget https://github.com/takbebeh/AutoPointing/raw/main/cfdomain.sh >/dev/null 2>&1 && chmod +x cfdomain.sh && ./cfdomain.sh >/dev/null 2>&1
     get_acme_domain
     ns_domain_cloudflare
 }
 
 clear
 echo -e " ┌─────────────────────────────────────────────────────────┐"
-echo -e "─│                        ${BLUE}WELCOME TO${NC}                       │─"
+echo -e "─│                        ${CYAN}WELCOME TO${NC}                       │─"
 echo -e "─│    ${ORANGE}┌─┐┬ ┬┌┬┐┌─┐┌─┐┌─┐┬─┐┬┌─┐┌┬┐  ┌─┐┬─┐┌─┐┌┬┐┬┬ ┬┌┬┐${NC}    │─"
 echo -e "─│    ${ORANGE}├─┤│ │ │ │ │└─┐│  ├┬┘│├─┘ │   ├─┘├┬┘├┤ │││││ ││││${NC}    │─"
 echo -e "─│    ${ORANGE}┴ ┴└─┘ ┴ └─┘└─┘└─┘┴└─┴┴   ┴   ┴  ┴└─└─┘┴ ┴┴└─┘┴ ┴${NC}    │─"
 echo -e "─│        ${RED}POWERRED BY ALFVPN${NC} | ${GREEN}TELEGRAM: @Mass_Alfin${NC}       │─"
 echo -e " └─────────────────────────────────────────────────────────┘"
 echo -e "─────────────────────────────────────────────────────────────
-              ${BLUE}Hostname${NC}     :  $LAST_DOMAIN
-              ${BLUE}Public IP${NC}    :  $MYIP
-              ${BLUE}Total RAM${NC}    :  $totalram MB
+              ${CYAN}Hostname${NC}     :  ${ORANGE}$LAST_DOMAIN${NC}
+              ${CYAN}Public IP${NC}    :  ${ORANGE}$MYIP${NC}
+              ${CYAN}Total RAM${NC}    :  ${ORANGE}$totalram MB${NC}
 ─────────────────────────────────────────────────────────────"
-echo -e "  ${Blue}[1]${NC} ${RED}•${NC} Pakai Domain Sendiri"
-echo -e "  ${Blue}[2]${NC} ${RED}•${NC} Pakai Domain Otomatis"
+echo -e "  ${CYAN}[1]${NC} ${RED}•${NC} Pakai Domain Sendiri"
+echo -e "  ${CYAN}[2]${NC} ${RED}•${NC} Pakai Domain Otomatis"
+echo -e "  ${CYAN}[0]${NC} ${RED}•${NC} Kembali Ke Menu"
+echo -e "─────────────────────────────────────────────────────────────"
 read -p "Silahkan masukkan pilihan anda [1-2] : " NUM_MENU
 
 case $NUM_MENU in
@@ -167,7 +129,10 @@ case $NUM_MENU in
 2)
     cloudflare
     ;;
+0)
+    menu
+    ;;
 *)
-    echo -e "${Red}You wrong command !${Font}"
+    get-domain
     ;;
 esac
