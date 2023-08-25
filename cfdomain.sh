@@ -1,9 +1,9 @@
 #!/bin/bash
-DOMAIN=alfvpn.my.id
+DOMAIN=alfvpn.cloud
 sub=$(tr </dev/urandom -dc a-z0-9 | head -c3)
-SUB_DOMAIN=${sub}.alfvpn.my.id
-CF_ID=alfinproject22@gmail.com
-CF_KEY=a9d92b093d290b0a16ed6d5610f4c6baa667d
+SUB_DOMAIN=${sub}.alfvpn.cloud
+CF_ID=alfvpncommunity@gmail.com
+CF_KEY=62a9286f621faa79e7fd192f9b71e4a047e93
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip)
 echo "Updating DNS for ${SUB_DOMAIN}..."
