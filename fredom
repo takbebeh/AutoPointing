@@ -7,7 +7,7 @@ read -rp "   ⚡ Masukkan IP VPS  : " ipinput
 echo "━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━"
 echo "         Data telah diterima dan akan segera diprogres"
 DOMAIN=alfvpn.cloud
-sub=$(</dev/urandom tr -dc a-z0-9 | head -c3)
+sub=$(</dev/urandom tr -dc a-z0-9 | head -c4)
 SUB_DOMAIN=${sub}.alfvpn.cloud
 CF_ID=alfvpncommunity@gmail.com
 CF_KEY=62a9286f621faa79e7fd192f9b71e4a047e93
