@@ -19,9 +19,10 @@ red() { echo -e "\\033[32;1m${*}\\033[0m"; }
 
 function get_acme_domain() {
 
-    echo -e "${GREEN}--->${NC}     Start "
+    echo -e "${GREEN}--->${NC}     Starting "
     systemctl stop nginx
     systemctl stop haproxy
+    sleep 5
     echo -e "${GREEN}--->${NC}     Starting renew cert "
     sleep 2
     echo -e "${GREEN}--->$NC     Getting acme for cert"
