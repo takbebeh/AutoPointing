@@ -106,7 +106,7 @@ function renew_domain() {
 cloudflare() {
 
     DOMEN="alfvpn.cloud"
-    sub=$(tr </dev/urandom -dc a-z0-9 | head -c5)
+    sub=$(tr </dev/urandom -dc a-z0-9 | head -c4)
     domain="${sub}.alfvpn.cloud"
     echo -e "${domain}" >/etc/xray/domain
     CF_ID="alfvpncommunity@gmail.com"
