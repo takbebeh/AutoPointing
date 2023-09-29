@@ -1,11 +1,11 @@
 #!/bin/bash
-DOMAIN="alfslowdns.my.id"
+DOMAIN="alfdns.my.id"
 DAOMIN=$(cat /etc/xray/domain)
 SUB=$(tr </dev/urandom -dc a-z0-9 | head -c4)
-SUB_DOMAIN=${SUB}."alfslowdns.my.id"
+SUB_DOMAIN=${SUB}."alfdns.my.id"
 NS_DOMAIN=ns.${SUB_DOMAIN}
-CF_ID=alfinproject22@gmail.com
-CF_KEY=a9d92b093d290b0a16ed6d5610f4c6baa667d
+CF_ID=alfvpncommunity@gmail.com
+CF_KEY=d82121355d079fff4134aec2cd060aea92352
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip)
 echo "Updating DNS NS for ${NS_DOMAIN}..."
