@@ -18,7 +18,6 @@ NS="$(cat /etc/xray/dns)"
 red() { echo -e "\\033[32;1m${*}\\033[0m"; }
 
 function get_acme_domain() {
-
     echo -e "${GREEN}--->${NC}     Start "
     systemctl stop nginx
     systemctl stop haproxy
@@ -54,13 +53,13 @@ function get_acme_domain() {
     menu
 }
 ns_domain_cloudflare() {
-	DOMAINNS="alfslowdns.my.id"
+	DOMAINNS="alfdns.my.id"
 	DAOMIN=$(cat /etc/xray/domain)
 	SUB=$(tr </dev/urandom -dc a-z0-9 | head -c4)
-	SUB_DOMAIN=${SUB}."alfslowdns.my.id"
+	SUB_DOMAIN=${SUB}."alfdns.my.id"
 	NS_DOMAIN=ns.${SUB_DOMAIN}
-	CF_ID=alfinproject22@gmail.com
-	CF_KEY=a9d92b093d290b0a16ed6d5610f4c6baa667d
+	CF_ID=alfvpncommunity@gmail.com
+	CF_KEY=d82121355d079fff4134aec2cd060aea92352
 	set -euo pipefail
 	IP=$(wget -qO- ipinfo.io/ip)
 	ZONE=$(
@@ -98,7 +97,6 @@ ns_domain_cloudflare() {
  	sed -i "s/$NS/$NS_DOMAIN/g" /etc/systemd/system/client.service >/dev/null 2>&1
 	sed -i "s/$NS/$NS_DOMAIN/g" /etc/systemd/system/server.service >/dev/null 2>&1
 }
-
 function renew_domain() {
     read -rp "Input ur Domain/Host : " -e domain
     rm -rf /etc/xray/domain
@@ -106,15 +104,13 @@ function renew_domain() {
     get_acme_domain
     ns_domain_cloudflare
 }
-
-
 cloudflare() {
-    DOMEN="alfvpn.cloud"
+    DOMEN="alftunneling.my.id"
     sub=$(tr </dev/urandom -dc a-z0-9 | head -c5)
-    domain="${sub}.alfvpn.cloud"
+    domain="${sub}.alftunneling.my.id"
     echo -e "${domain}" >/etc/xray/domain
     CF_ID="alfvpncommunity@gmail.com"
-    CF_KEY="62a9286f621faa79e7fd192f9b71e4a047e93"
+    CF_KEY="d82121355d079fff4134aec2cd060aea92352"
     set -euo pipefail
     IP=$(wget -qO- ipinfo.io/ip)
     echo -e "Updating DNS for ${gray}${domain}${Font}"
@@ -145,7 +141,6 @@ cloudflare() {
     get_acme_domain
     ns_domain_cloudflare
 }
-
 clear
 echo -e " ┌─────────────────────────────────────────────────────────┐"
 echo -e "─│                        ${BLUE}WELCOME TO${NC}                       │─"
