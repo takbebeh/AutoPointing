@@ -38,12 +38,12 @@ function get_acme_domain() {
     echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Memperbarui semua sertifikat${NC}"
     sleep 2
     echo -e "   [${ORANGE}INFO${NC}] ${CYAN}Sedang mendownload sertifikat kedalam VPS${NC}"
-    /root/.acme.sh/acme.sh --upgrade --auto-upgrade >/dev/null 2>&1
-    /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt >/dev/null 2>&1
-    /root/.acme.sh/acme.sh --issue -d $baru --standalone -k ec-256 >/dev/null 2>&1
-    ~/.acme.sh/acme.sh --installcert -d $baru --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc >/dev/null 2>&1
+    /root/.acme.sh/acme.sh --upgrade --auto-upgrade
+    /root/.acme.sh/acme.sh --set-default-ca --server letsencrypt
+    /root/.acme.sh/acme.sh --issue -d $baru --standalone -k ec-256
+    ~/.acme.sh/acme.sh --installcert -d $baru --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc
     rm /etc/haproxy/yha.pem
-    cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/yha.pem >/dev/null 2>&1
+    cat /etc/xray/xray.crt /etc/xray/xray.key | tee
     echo -e "   [${GREEN}DONE${NC}] ${CYAN}Pembaruan Sertifikat Selesai${NC}"
     sed -i "s/${LAST_DOMAIN}/${baru}/g" /etc/nginx/conf.d/xray.conf >/dev/null 2>&1
     sed -i "s/${LAST_DOMAIN}/${baru}/g" /var/www/html/index.html >/dev/null 2>&1
