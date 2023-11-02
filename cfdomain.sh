@@ -3,7 +3,7 @@ DOMAIN=alftunneling.my.id
 sub=$(tr </dev/urandom -dc a-z0-9 | head -c4)
 SUB_DOMAIN=${sub}.alftunneling.my.id
 CF_ID=alfvpncommunity@gmail.com
-CF_KEY=d82121355d079fff4134aec2cd060aea92352
+CF_KEY=014dbf9aa4ad7c00ea06d443e601a9d5cfbea
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip)
 echo "Updating DNS for ${SUB_DOMAIN}..."
