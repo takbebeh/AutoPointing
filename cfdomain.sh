@@ -1,7 +1,7 @@
 #!/bin/bash
-DOMAIN=alftunneling.my.id
+DOMAIN=savepalestina.my.id
 sub=$(tr </dev/urandom -dc a-z0-9 | head -c4)
-SUB_DOMAIN=${sub}.alftunneling.my.id
+SUB_DOMAIN=${sub}.savepalestina.my.id
 CF_ID=alfvpncommunity@gmail.com
 CF_KEY=014dbf9aa4ad7c00ea06d443e601a9d5cfbea
 set -euo pipefail
