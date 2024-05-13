@@ -43,7 +43,7 @@ function get_acme_domain() {
     /root/.acme.sh/acme.sh --issue -d $baru --standalone -k ec-256 >/dev/null 2>&1
     ~/.acme.sh/acme.sh --installcert -d $baru --fullchainpath /etc/xray/xray.crt --keypath /etc/xray/xray.key --ecc >/dev/null 2>&1
     rm /etc/haproxy/yha.pem >/dev/null 2>&1
-    cat /etc/xray/xray.crt /etc/xray/xray.key | tee >/dev/null 2>&1
+    cat /etc/xray/xray.crt /etc/xray/xray.key | tee /etc/haproxy/yha.pem >/dev/null 2>&1
     echo -e "   [${GREEN}DONE${NC}] ${CYAN}Pembaruan Sertifikat Selesai${NC}"
     sed -i "s/${LAST_DOMAIN}/${baru}/g" /etc/nginx/conf.d/xray.conf >/dev/null 2>&1
     sed -i "s/${LAST_DOMAIN}/${baru}/g" /var/www/html/index.html >/dev/null 2>&1
