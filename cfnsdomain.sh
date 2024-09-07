@@ -1,5 +1,5 @@
 #!/bin/bash
-DOMAIN="alfdns.my.id"
+DOMAIN="dnstun.cloud"
 DAOMIN=$(cat /etc/xray/domain)
 SUB=$(tr </dev/urandom -dc a-z | head -c6)
 SUB_DOMAIN=${SUB}."dnstun.cloud"
