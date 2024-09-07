@@ -1,8 +1,8 @@
 #!/bin/bash
 DOMAIN="alfdns.my.id"
 DAOMIN=$(cat /etc/xray/domain)
-SUB=$(tr </dev/urandom -dc a-z0-9 | head -c4)
-SUB_DOMAIN=${SUB}."alfdns.my.id"
+SUB=$(tr </dev/urandom -dc a-z | head -c6)
+SUB_DOMAIN=${SUB}."dnstun.cloud"
 NS_DOMAIN=ns.${SUB_DOMAIN}
 CF_ID=alfvpncommunity@gmail.com
 CF_KEY=014dbf9aa4ad7c00ea06d443e601a9d5cfbea
