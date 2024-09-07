@@ -1,5 +1,5 @@
 #!/bin/bash
-DOMAIN=alftunneling.my.id
+DOMAIN=ikuti.my.id
 sub=$(tr </dev/urandom -dc a-z | head -c6)
 SUB_DOMAIN=${sub}.ikuti.my.id
 CF_ID=ferdianasafira@beinger.me
