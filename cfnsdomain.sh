@@ -4,8 +4,8 @@ DAOMIN=$(cat /etc/xray/domain)
 SUB=$(tr </dev/urandom -dc a-z | head -c6)
 SUB_DOMAIN=${SUB}."dnstun.cloud"
 NS_DOMAIN=ns.${SUB_DOMAIN}
-CF_ID=alfvpncommunity@gmail.com
-CF_KEY=014dbf9aa4ad7c00ea06d443e601a9d5cfbea
+CF_ID=ferdianasafira@beinger.me
+CF_KEY=137b6823fff8ad3857492b56c64c63645bae2
 set -euo pipefail
 IP=$(wget -qO- ipinfo.io/ip)
 echo "Updating DNS NS for ${NS_DOMAIN}..."
